@@ -4,7 +4,7 @@ import requests
 app = Flask(__name__)
 
 def auth(auth):
-    r = requests.post('http://{}:4583/auth', json={'auth': auth})
+    r = requests.post('http://{}:4583/auth'.format(app.server_ip), json={'auth': auth})
     authenticated = None
     if r.text == 'False':
         authenticated = False
