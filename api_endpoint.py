@@ -18,6 +18,7 @@ def get_vnc_data():
 
 def start_vncserver(port):
     print('start_vncserver({}) called'.format(port))
+    return 'done'
 
 @app.route('/start', methods=['POST'])
 def start_vnc():
@@ -35,7 +36,7 @@ def start_vnc():
                 else:
                     return 'unprivileged'
             else:
-                start_vncserver(port)
+                return start_vncserver(port)
         else:
             return 'vnc notfound'
 
