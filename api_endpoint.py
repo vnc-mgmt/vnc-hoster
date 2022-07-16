@@ -13,7 +13,7 @@ def auth(auth):
     return authenticated
 
 def get_vnc_data():
-    r = requests.get('http://{}/vnc_data'.format(app.server_ip))
+    r = requests.get('http://{}:4583/vnc_data'.format(app.server_ip))
     return r.json()
 
 def start_vncserver(port):
