@@ -40,6 +40,7 @@ def start_vnc():
         else:
             return 'vnc notfound'
 
-def run_server(server_ip):
+def run_server(server_ip, debug):
     app.server_ip = server_ip
+    app.debug_mode = debug
     app.run(host='0.0.0.0', port=4584)

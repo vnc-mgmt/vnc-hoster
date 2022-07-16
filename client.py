@@ -12,6 +12,11 @@ else:
     server_ip_f.close()
     hostname = socket.gethostname()
 
+if os.path.exists('debug'):
+    debug = True
+else:
+    debug = False
+
     r = requests.get('http://{}:4583/add/{}'.format(server_ip, hostname))
 
-    api_endpoint.run_server(server_ip)
+    api_endpoint.run_server(server_ip, debug)
