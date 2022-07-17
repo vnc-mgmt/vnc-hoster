@@ -1,7 +1,10 @@
 from flask import Flask, request
 import requests
+import process_mgmt
 
 app = Flask(__name__)
+
+vnc_servers = {}
 
 def auth(auth):
     r = requests.post('http://{}:4583/auth'.format(app.server_ip), data={'auth': auth})
@@ -17,7 +20,7 @@ def get_vnc_data():
     return r.json()
 
 def start_vncserver(port):
-    print('start_vncserver({}) called'.format(port))
+    vnc_servers[port] = process_mgmt.VNCServer(self.debug_mode, port)
     return 'done'
 
 @app.route('/start', methods=['POST'])
@@ -32,7 +35,7 @@ def start_vnc():
         if port in vnc_data:
             if permissions == 0:
                 if auth_details.split(':')[0] == vnc_data[port]['username']:
-                    start_vncserver()
+                    start_vncserver(port)
                 else:
                     return 'unprivileged'
             else:

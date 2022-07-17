@@ -2,6 +2,7 @@ import requests
 import api_endpoint
 import socket
 import os
+import sys
 
 if not os.path.exists('server_ip.conf'):
     open('server_ip.conf', 'x').close()
@@ -17,6 +18,11 @@ if os.path.exists('debug'):
 else:
     debug = False
 
-    r = requests.get('http://{}:4583/add/{}'.format(server_ip, hostname))
+if not os.path.exists('novnc') and not debug:
+    print('noVNC does not exist, run this to clone it:')
+    print('git clone https://github.com/novnc/novnc')
+    sys.exit(1)
 
-    api_endpoint.run_server(server_ip, debug)
+r = requests.get('http://{}:4583/add/{}'.format(server_ip, hostname))
+
+api_endpoint.run_server(server_ip, debug)
