@@ -28,7 +28,7 @@ def start_vncserver(port):
 def start_vnc():
     data = dict(request.form)
     auth_details = data['auth']
-    port = data['port']
+    port = int(data['port'])
     authenticated = auth(auth_details)
     if not authenticated == False:
         permissions = authenticated
