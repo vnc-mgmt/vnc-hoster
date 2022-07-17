@@ -38,11 +38,11 @@ def start_vnc():
                 if auth_details.split(':')[0] == vnc_data[port]['username']:
                     start_vncserver(port)
                 else:
-                    return 'unprivileged'
+                    return 'unprivileged', 401
             else:
                 return start_vncserver(port)
         else:
-            return 'vnc notfound'
+            return 'vnc notfound', 404
 
 def run_server(server_ip, debug):
     app.server_ip = server_ip
