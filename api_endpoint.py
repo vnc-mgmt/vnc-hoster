@@ -21,6 +21,7 @@ def get_vnc_data():
 
 def start_vncserver(port):
     vnc_servers[port] = process_mgmt.VNCServer(self.debug_mode, port)
+    vnc_servers[port].start()
     return 'done'
 
 @app.route('/start', methods=['POST'])
