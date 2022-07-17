@@ -20,7 +20,7 @@ def get_vnc_data():
     return r.json()
 
 def start_vncserver(port):
-    vnc_servers[port] = process_mgmt.VNCServer(self.debug_mode, port)
+    vnc_servers[port] = process_mgmt.VNCServer(app.debug_mode, port)
     vnc_servers[port].start()
     return 'done'
 
