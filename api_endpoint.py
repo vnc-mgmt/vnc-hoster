@@ -24,6 +24,10 @@ def start_vncserver(port):
     vnc_servers[port].start()
     return 'done'
 
+def stop_vncserver(port):
+    vncservers[port].terminate()
+    return 'done'
+
 @app.route('/start', methods=['POST'])
 def start_vnc():
     data = dict(request.form)
@@ -41,6 +45,26 @@ def start_vnc():
                     return 'unprivileged', 401
             else:
                 return start_vncserver(port)
+        else:
+            return 'vnc notfound', 404
+
+@app.route('/stop_vnc', methods=['POST'])
+def stop_vnc():
+    data = dict(request.form)
+    auth_details = data['auth']
+    port = int(data['port'])
+    authenticated = auth(auth_details)
+    if not authenticated == False:
+        permissions = authenticated
+        vnc_data = get_vnc_data()
+        if str(port) in vnc_data:
+            if permissions == 0:
+                if auth_details.split(':')[0] == vnc_data[str(port)]['username']:
+                    stop_vncserver(port)
+                else:
+                    return 'unprivileged', 401
+            else:
+                return stop_vncserver(port)
         else:
             return 'vnc notfound', 404
 
