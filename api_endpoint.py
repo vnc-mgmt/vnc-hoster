@@ -48,7 +48,7 @@ def start_vnc():
         else:
             return 'vnc notfound', 404
 
-@app.route('/stop_vnc', methods=['POST'])
+@app.route('/stop', methods=['POST'])
 def stop_vnc():
     data = dict(request.form)
     auth_details = data['auth']
