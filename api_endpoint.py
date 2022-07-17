@@ -25,7 +25,7 @@ def start_vncserver(port):
     return 'done'
 
 def stop_vncserver(port):
-    vncservers[port].terminate()
+    vnc_servers[port].terminate()
     return 'done'
 
 @app.route('/start', methods=['POST'])
