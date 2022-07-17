@@ -33,9 +33,9 @@ def start_vnc():
     if not authenticated == False:
         permissions = authenticated
         vnc_data = get_vnc_data()
-        if port in vnc_data:
+        if str(port) in vnc_data:
             if permissions == 0:
-                if auth_details.split(':')[0] == vnc_data[port]['username']:
+                if auth_details.split(':')[0] == vnc_data[str(port)]['username']:
                     start_vncserver(port)
                 else:
                     return 'unprivileged', 401
