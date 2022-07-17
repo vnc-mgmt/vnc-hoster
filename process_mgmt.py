@@ -16,7 +16,7 @@ class VNCServer:
         if self.debug:
             print('start_novnc_process called, port {}'.format(self.port))
         else:
-            self.novnc_process = subprocess.Popen(['./novnc/utils/novnc_proxy', '--listen', str(self.port), '--vnc', str(self.port-1)])
+            self.novnc_process = subprocess.Popen(['./novnc/utils/novnc_proxy', '--listen', str(self.port), '--vnc', 'localhost:' + str(self.port-1)])
     def terminate_server_process(self):
         if self.debug:
             print('terminate_server_process called, port {}'.format(self.port))
