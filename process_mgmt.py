@@ -11,7 +11,7 @@ class VNCServer:
         if self.debug:
             print('start_server_process called, port {}'.format(self.port-1))
         else:
-            self.server_process = subprocess.Popen(['vncserver', '-rfbport', str(self.port-1)])
+            self.server_process = subprocess.Popen(['runuser', '-l', self.user, '-c', 'vncserver -rfbport {}'.format(str(self.port-1))])
     def start_novnc_process(self):
         if self.debug:
             print('start_novnc_process called, port {}'.format(self.port))

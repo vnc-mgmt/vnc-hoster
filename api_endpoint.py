@@ -1,6 +1,9 @@
 from flask import Flask, request
 import requests
 import process_mgmt
+import os
+import crypt
+import pwd
 
 app = Flask(__name__)
 
@@ -19,6 +22,18 @@ def get_vnc_data():
     r = requests.get('http://{}:4583/vnc_data'.format(app.server_ip))
     return r.json()
 
+def create_vncserver(user, passwd, sudo):
+    found = False
+    for p in pwd.getpwall():
+        if p.pw_name == user:
+            found = True
+    if not found:
+        os.system('useradd -m {}'.format(user))
+        hashed_passwd = crypt.crypt(passwd)
+        os.system("echo '{}:{}' | chpasswd -e".format(user, hashed_passwd))
+        if sudo:
+            os.system('usermod -aG sudo {}'.format(user))
+
 def start_vncserver(port):
     vnc_servers[port] = process_mgmt.VNCServer(app.debug_mode, port)
     vnc_servers[port].start()
@@ -26,6 +41,20 @@ def start_vncserver(port):
 
 def stop_vncserver(port):
     vnc_servers[port].terminate()
+    return 'done'
+
+@app.route('/create', methods=['POST'])
+def create_vnc():
+    if not app.debug_mode:
+        data = dict(request.form)
+        auth_details = data['auth']
+        port = int(data['port'])
+        authenticated = auth(auth_details)
+        if not authenticated == False:
+            sudo = authenticated >= 2
+            create_vncserver(auth_details.split(':')[0], auth_details.split(':')[1], sudo)
+    else:
+        print('create_vnc() called')
     return 'done'
 
 @app.route('/start', methods=['POST'])
