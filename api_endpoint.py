@@ -40,7 +40,10 @@ def start_vncserver(port):
     return 'done'
 
 def stop_vncserver(port):
-    vnc_servers[port].terminate()
+    try:
+        vnc_servers[port].terminate()
+    except:
+        return 'vnc already stopped'
     return 'done'
 
 @app.route('/create', methods=['POST'])
