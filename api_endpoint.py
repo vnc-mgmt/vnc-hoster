@@ -80,6 +80,10 @@ def start_vnc():
         else:
             return 'vnc notfound', 404
 
+@app.route('/ping')
+def ping():
+    return 'pong'
+
 @app.route('/stop', methods=['POST'])
 def stop_vnc():
     data = dict(request.form)
