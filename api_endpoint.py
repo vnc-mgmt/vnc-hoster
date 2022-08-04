@@ -57,7 +57,9 @@ def create_vnc():
             sudo = authenticated >= 2
             create_vncserver(auth_details.split(':')[0], auth_details.split(':')[1], sudo)
     else:
-        print('create_vnc() called')
+        data = dict(request.form)
+        port = int(data['port'])
+        print('create_vnc() called for port {}'.format(port))
     return 'done'
 
 @app.route('/start', methods=['POST'])
