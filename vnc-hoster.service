@@ -1,0 +1,10 @@
+[Unit]
+Description=VNC Hoster
+
+[Service]
+Type=simple
+WorkingDirectory=/vnc-hoster
+ExecStart=python3 client.py
+
+[Install]
+WantedBy=multi-user.target
