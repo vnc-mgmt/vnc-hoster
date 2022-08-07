@@ -9,7 +9,7 @@ if not os.path.exists('server_ip.conf'):
     print('Server IP Not set')
 else:
     server_ip_f = open('server_ip.conf')
-    server_ip = server_ip_f.read()
+    server_ip = server_ip_f.read().replace('\n', '')
     server_ip_f.close()
     hostname = socket.gethostname()
 
