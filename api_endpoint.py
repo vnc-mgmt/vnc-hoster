@@ -34,7 +34,7 @@ def create_vncserver(user, passwd, sudo):
         if sudo:
             os.system('usermod -aG sudo {}'.format(user))
 
-def start_vncserver(user, port):
+def start_vncserver(port, user):
     vnc_servers[port] = process_mgmt.VNCServer(app.debug_mode, port, user)
     vnc_servers[port].start()
     return 'done'
