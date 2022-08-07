@@ -1,7 +1,7 @@
 import subprocess
 
 class VNCServer:
-    def __init__(self, debug, port, user=None):
+    def __init__(self, debug, port, user):
         self.debug = debug
         self.port = port
         self.user = user

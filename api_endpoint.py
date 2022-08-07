@@ -34,8 +34,8 @@ def create_vncserver(user, passwd, sudo):
         if sudo:
             os.system('usermod -aG sudo {}'.format(user))
 
-def start_vncserver(port):
-    vnc_servers[port] = process_mgmt.VNCServer(app.debug_mode, port)
+def start_vncserver(user, port):
+    vnc_servers[port] = process_mgmt.VNCServer(app.debug_mode, port, user)
     vnc_servers[port].start()
     return 'done'
 
@@ -71,14 +71,15 @@ def start_vnc():
     if not authenticated == False:
         permissions = authenticated
         vnc_data = get_vnc_data()
+        username = auth_details.split(':')[0]
         if str(port) in vnc_data:
             if permissions == 0:
                 if auth_details.split(':')[0] == vnc_data[str(port)]['username']:
-                    start_vncserver(port)
+                    start_vncserver(port, username)
                 else:
                     return 'unprivileged', 401
             else:
-                return start_vncserver(port)
+                return start_vncserver(port, username)
         else:
             return 'vnc notfound', 404
 
